@@ -8,11 +8,11 @@ connection= mysql.createConnection({
 });
 
 //metodos de consultas
-let userModel={};
+let detalleModel={};
 
-userModel.getUsers= (callback) =>{
+detalleModel.getDatos= (callback) =>{
     if(connection) {
-        connection.query('SELECT * FROM usuario ',
+        connection.query('SELECT * FROM detalles ',
         (err, rows) =>{
             if(err){
                 throw err;
@@ -24,9 +24,9 @@ userModel.getUsers= (callback) =>{
     }
 };
 
-userModel.postUsers= (userData,callback) => {
+detalleModel.postDatos= (datosData,callback) => {
     if(connection){
-        connection.query('INSERT INTO usuario SET ?',userData,
+        connection.query('INSERT INTO detalles SET ?',datosData,
             (err, result) => {
                 
                 if(err){
@@ -42,10 +42,10 @@ userModel.postUsers= (userData,callback) => {
     }
 };
 
-userModel.updateUser= (userData, callback) => {
+detalleModel.updateDatos= (datosData, callback) => {
     if(connection){
 
-        connection.query('UPDATE usuario SET username = ?, email = ?, password = ?, role=?  WHERE id = ?',[userData.username, userData.email, userData.password, userData.role,  userData.id], (err, result) => {
+        connection.query('UPDATE detalles SET Discapacidad = ?, FechaJubilacion = ?, FechaVigencia = ?, FechaIngresoInicial = ?, idUsuario = ?, idFormacionAcademica = ? ,idPostgrado = ? ,Created = ? ,Updated = ? ,Deleted = ?   WHERE id = ?',[datosData.Discapacidad, datos.FechaJubilacion, datosData.FechaVigencia,datosData.FechaIngresoInicial,datosData.idUsuario,datosData.idFormacionAcademica,datosData.idPostgrado,datosData.Created,datosData.Updated,datosData.Deleted, datosData.id], (err, result) => {
             if(err){
                 throw err
             } else{
@@ -55,15 +55,13 @@ userModel.updateUser= (userData, callback) => {
             }
         })
     }
-}
+};
 
-userModel.deleteUser= ( id, callback) => {
+detalleModel.deleteDatos= ( id, callback) => {
     if(connection){
          
-       connection.query('SELECT * FROM usuario WHERE id= ?',[id],
-       (err,row) =>{
-           if(row){
-               connection.query('DELETE FROM usuario WHERE id=?',[id], (err, result) =>{
+      
+               connection.query('UPDATE  detalles SET Deleted =? WHERE id=?',[true,id], (err, result) =>{
                    if(err){
                        throw err
                    } else{
@@ -77,10 +75,9 @@ userModel.deleteUser= ( id, callback) => {
                 msg: 'not exists'
             })
            }
-       })
+       
         
-    }
-}
+    
+};
 
-
-module.exports = userModel;
+module.exports = detalleModel;

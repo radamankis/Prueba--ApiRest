@@ -8,11 +8,11 @@ connection= mysql.createConnection({
 });
 
 //metodos de consultas
-let userModel={};
+let remuneracionesModel={};
 
-userModel.getUsers= (callback) =>{
+remuneracionesModel.getDatos= (callback) =>{
     if(connection) {
-        connection.query('SELECT * FROM usuario ',
+        connection.query('SELECT * FROM remuneraciones ORDER BY id',
         (err, rows) =>{
             if(err){
                 throw err;
@@ -24,9 +24,9 @@ userModel.getUsers= (callback) =>{
     }
 };
 
-userModel.postUsers= (userData,callback) => {
+remuneracionesModel.postDatos= (datosData,callback) => {
     if(connection){
-        connection.query('INSERT INTO usuario SET ?',userData,
+        connection.query('INSERT INTO remuneraciones SET ?',datosData,
             (err, result) => {
                 
                 if(err){
@@ -42,10 +42,10 @@ userModel.postUsers= (userData,callback) => {
     }
 };
 
-userModel.updateUser= (userData, callback) => {
+remuneracionesModel.updateDatos= (datosData, callback) => {
     if(connection){
 
-        connection.query('UPDATE usuario SET username = ?, email = ?, password = ?, role=?  WHERE id = ?',[userData.username, userData.email, userData.password, userData.role,  userData.id], (err, result) => {
+        connection.query('UPDATE remuneraciones SET SueldoTabla = ?, BonoJefatura = ?, PrimaFamiliar = ?,  BonoLacteo = ?, PrimaGradoAcademico = ?, PrimaProfecionalizacion = ?, PrimaHijoDiscapacidad = ?, PrimaApoyo = ?, PrimaChoferSupervisor =?, PasoAutomatico =?, AporteCajaAhorro =? WHERE id = ?',[datosData.SueldoTabla, datos.BonoJefatura, datosData.PrimaFamiliar, datosData.BonoLacteo, datosData.PrimaGradoAcademico, datosData.PrimaProfecionalizacion, datosData.PrimaHijoDiscapacidad, datosData.PrimaApoyo, datosData.PrimaChoferSupervisor, datosData.PasoAutomatico, datosData.AporteCajaAhorro, datosData.id], (err, result) => {
             if(err){
                 throw err
             } else{
@@ -55,15 +55,15 @@ userModel.updateUser= (userData, callback) => {
             }
         })
     }
-}
+};
 
-userModel.deleteUser= ( id, callback) => {
+remuneracionesModel.deleteDatos= ( id, callback) => {
     if(connection){
          
-       connection.query('SELECT * FROM usuario WHERE id= ?',[id],
+       connection.query('SELECT * FROM remuneraciones WHERE id= ?',[id],
        (err,row) =>{
            if(row){
-               connection.query('DELETE FROM usuario WHERE id=?',[id], (err, result) =>{
+               connection.query('DELETE FROM remuneraciones WHERE id=?',[id], (err, result) =>{
                    if(err){
                        throw err
                    } else{
@@ -82,5 +82,4 @@ userModel.deleteUser= ( id, callback) => {
     }
 }
 
-
-module.exports = userModel;
+module.exports = remuneracionesModel;

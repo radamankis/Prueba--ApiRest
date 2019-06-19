@@ -8,11 +8,11 @@ connection= mysql.createConnection({
 });
 
 //metodos de consultas
-let userModel={};
+let cargoModel={};
 
-userModel.getUsers= (callback) =>{
+cargoModel.getDatos= (callback) =>{
     if(connection) {
-        connection.query('SELECT * FROM usuario ',
+        connection.query('SELECT * FROM cargo ',
         (err, rows) =>{
             if(err){
                 throw err;
@@ -24,9 +24,9 @@ userModel.getUsers= (callback) =>{
     }
 };
 
-userModel.postUsers= (userData,callback) => {
+cargoModel.postDatos= (datosData,callback) => {
     if(connection){
-        connection.query('INSERT INTO usuario SET ?',userData,
+        connection.query('INSERT INTO cargo SET ?',datosData,
             (err, result) => {
                 
                 if(err){
@@ -42,10 +42,10 @@ userModel.postUsers= (userData,callback) => {
     }
 };
 
-userModel.updateUser= (userData, callback) => {
+cargoModel.updateDatos= (datosData, callback) => {
     if(connection){
 
-        connection.query('UPDATE usuario SET username = ?, email = ?, password = ?, role=?  WHERE id = ?',[userData.username, userData.email, userData.password, userData.role,  userData.id], (err, result) => {
+        connection.query('UPDATE cargo SET idDatoPersonal = ?, Nucleo = ?, CodigoNucleo = ?, Localizacion = ?, Dependencia = ?, DenominacionCargo = ? ,CargoActualUdo = ? ,idCargoOpsu = ? ,FechaDesdeOtra = ? ,FechaHastaOtra = ? ,NombreOtraInstitucion = ?  WHERE id = ?',[datosData.idDatoPersonal, datos.Nucleo, datosData.CodigoNucleo,datosData.Localizacion,datosData.Dependencia,datosData.DenominacionCargo,datosData.CargoActualUdo,datosData.idCargoOpsu,datosData.FechaDesdeOtra,datosData.FechaHastaOtra,datosData.NombreOtraInstitucion, datosData.id], (err, result) => {
             if(err){
                 throw err
             } else{
@@ -55,15 +55,15 @@ userModel.updateUser= (userData, callback) => {
             }
         })
     }
-}
+};
 
-userModel.deleteUser= ( id, callback) => {
+cargoModel.deleteDatos= ( id, callback) => {
     if(connection){
          
-       connection.query('SELECT * FROM usuario WHERE id= ?',[id],
+       connection.query('SELECT * FROM cargo WHERE id= ?',[id],
        (err,row) =>{
            if(row){
-               connection.query('DELETE FROM usuario WHERE id=?',[id], (err, result) =>{
+               connection.query('DELETE FROM cargo WHERE id=?',[id], (err, result) =>{
                    if(err){
                        throw err
                    } else{
@@ -80,7 +80,6 @@ userModel.deleteUser= ( id, callback) => {
        })
         
     }
-}
+};
 
-
-module.exports = userModel;
+module.exports = cargoModel;

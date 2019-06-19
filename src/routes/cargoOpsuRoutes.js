@@ -1,29 +1,27 @@
 const express = require("express");
-const users = express.Router();
-const User=require('../models/user');
+const cargoOpsu = express.Router();
+const CargoOpsu=require('../models/cargoOpsu');
 const cors = require('cors')
-users.use(cors());
+cargoOpsu.use(cors());
 
 
 
-    users.get('/users', (req,res) => {
-        User.getUsers((err,data) => {
+    cargoOpsu.get('/cargoopsu', (req,res) => {
+        CargoOpsu.getUsers((err,data) => {
             res.json(data);
         });
     });
 
 
-    users.post('/users', (req, res) => {
+    cargoOpsu.post('/cargoopsu', (req, res) => {
         const userData= {
             
-            username: req.body.username,
-            password: req.body.password,
-            role: req.body.role
-            // created_at: null//
+            Nombre: req.body.Nombre
+            
             
         };
 
-        User.postUsers( userData, (err, data) =>{
+        CargoOpsu.postDatos( userData, (err, data) =>{
             if(data&& data.insertId) {
                 console.log(data)
                 res.json({
@@ -42,17 +40,15 @@ users.use(cors());
 
     });
 
-    users.put('/users/:id', (req, res) =>{
+    cargoOpsu.put('/cargoopsu/:id', (req, res) =>{
        
         const userData= {
-            id: req.params.id,
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            created_at: null
+            
+            Nombre: req.body.Nombre,
+            
             
         };
-        User.updateUser(userData, (err, data) =>{
+        CargoOpsu.updateDatos(userData, (err, data) =>{
             if(data && data.msg){
                 res.json(data)
             } else{
@@ -64,8 +60,8 @@ users.use(cors());
         })
     })
 
-    users.delete('/users/:id', (req, res) =>{
-        User.deleteUser( req.params.id, (err, data) =>{
+    cargoOpsu.delete('/cargoopsu/:id', (req, res) =>{
+        CargoOpsu.deleteUser( req.params.id, (err, data) =>{
             if(data && data.msg === 'deleted' || data.msg ==='not exists'){
                 res.json({
                     success: true,
@@ -78,4 +74,4 @@ users.use(cors());
             }
         })
     })
-module.exports= users;
+module.exports= cargoOpsu;

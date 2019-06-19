@@ -8,11 +8,11 @@ connection= mysql.createConnection({
 });
 
 //metodos de consultas
-let userModel={};
+let tipoPersonalModel={};
 
-userModel.getUsers= (callback) =>{
+tipoPersonalModel.getDatos= (callback) =>{
     if(connection) {
-        connection.query('SELECT * FROM usuario ',
+        connection.query('SELECT * FROM tipopersonal ',
         (err, rows) =>{
             if(err){
                 throw err;
@@ -24,9 +24,9 @@ userModel.getUsers= (callback) =>{
     }
 };
 
-userModel.postUsers= (userData,callback) => {
+tipoPersonalModel.postDatos= (datosData,callback) => {
     if(connection){
-        connection.query('INSERT INTO usuario SET ?',userData,
+        connection.query('INSERT INTO tipopersonal SET ?',datosData,
             (err, result) => {
                 
                 if(err){
@@ -42,10 +42,10 @@ userModel.postUsers= (userData,callback) => {
     }
 };
 
-userModel.updateUser= (userData, callback) => {
+tipoPersonalModel.updateDatos= (datosData, callback) => {
     if(connection){
 
-        connection.query('UPDATE usuario SET username = ?, email = ?, password = ?, role=?  WHERE id = ?',[userData.username, userData.email, userData.password, userData.role,  userData.id], (err, result) => {
+        connection.query('UPDATE tipopersonal SET idDatoPersonal = ?, idTipoCargo = ?, ComisionServicioDesde = ?, ComisionServicioHasta = ?, PermisoNRDesde = ?, PermisoNRHasta = ? ,CodigoCargo = ? ,Nucleo = ? ,Prog = ? ,ACC = ? ,SubACC = ?, Tarea=?, Detalle=?  WHERE id = ?',[datosData.idDatoPersonal, datos.idTipoCargo, datosData.ComisionServicioDesde,datosData.ComisionServicioHasta,datosData.PermisoNRDesde,datosData.PermisoNRHasta,datosData.CodigoCargo,datosData.Nucleo,datosData.Prog,datosData.ACC,datosData.SubACC,datosData.Tarea,datosData.Detalle, datosData.id], (err, result) => {
             if(err){
                 throw err
             } else{
@@ -55,15 +55,15 @@ userModel.updateUser= (userData, callback) => {
             }
         })
     }
-}
+};
 
-userModel.deleteUser= ( id, callback) => {
+tipoPersonalModel.deleteDatos= ( id, callback) => {
     if(connection){
          
-       connection.query('SELECT * FROM usuario WHERE id= ?',[id],
+       connection.query('SELECT * FROM tipopersonal WHERE id= ?',[id],
        (err,row) =>{
            if(row){
-               connection.query('DELETE FROM usuario WHERE id=?',[id], (err, result) =>{
+               connection.query('DELETE FROM tipopersonal WHERE id=?',[id], (err, result) =>{
                    if(err){
                        throw err
                    } else{
@@ -80,7 +80,6 @@ userModel.deleteUser= ( id, callback) => {
        })
         
     }
-}
+};
 
-
-module.exports = userModel;
+module.exports = tipoPersonalModel;

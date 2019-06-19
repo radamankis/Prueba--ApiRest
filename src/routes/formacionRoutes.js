@@ -1,29 +1,29 @@
 const express = require("express");
-const users = express.Router();
-const User=require('../models/user');
+const formacion = express.Router();
+const Formacion=require('../models/formacionAcademica');
 const cors = require('cors')
-users.use(cors());
+formacion.use(cors());
 
 
 
-    users.get('/users', (req,res) => {
-        User.getUsers((err,data) => {
+    formacion.get('/formacion', (req,res) => {
+        Formacion.getUsers((err,data) => {
             res.json(data);
         });
     });
 
 
-    users.post('/users', (req, res) => {
+    formacion.post('/formacion', (req, res) => {
         const userData= {
             
-            username: req.body.username,
-            password: req.body.password,
-            role: req.body.role
+            GradoInstitucion: req.body.GradoInstitucion,
+            TituloPregrado: req.body.TituloPregrado,
+            UniversidadPre: req.body.UniversidadPre
             // created_at: null//
             
         };
 
-        User.postUsers( userData, (err, data) =>{
+        Formacion.postDatos( userData, (err, data) =>{
             if(data&& data.insertId) {
                 console.log(data)
                 res.json({
@@ -42,17 +42,18 @@ users.use(cors());
 
     });
 
-    users.put('/users/:id', (req, res) =>{
+    formacion.put('/formacion/:id', (req, res) =>{
        
         const userData= {
-            id: req.params.id,
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            created_at: null
             
+            GradoInstitucion: req.body.GradoInstitucion,
+            TituloPregrado: req.body.TituloPregrado,
+            UniversidadPre: req.body.UniversidadPre
+            // created_at: null//
+            
+                    
         };
-        User.updateUser(userData, (err, data) =>{
+        Formacion.updateDatos(userData, (err, data) =>{
             if(data && data.msg){
                 res.json(data)
             } else{
@@ -64,8 +65,8 @@ users.use(cors());
         })
     })
 
-    users.delete('/users/:id', (req, res) =>{
-        User.deleteUser( req.params.id, (err, data) =>{
+    formacion.delete('/formacion/:id', (req, res) =>{
+        Formacion.deleteUser( req.params.id, (err, data) =>{
             if(data && data.msg === 'deleted' || data.msg ==='not exists'){
                 res.json({
                     success: true,
@@ -78,4 +79,4 @@ users.use(cors());
             }
         })
     })
-module.exports= users;
+module.exports= formacion;

@@ -1,29 +1,29 @@
 const express = require("express");
-const users = express.Router();
-const User=require('../models/user');
+const postgrado = express.Router();
+const Postgrado=require('../models/postgrado');
 const cors = require('cors')
-users.use(cors());
+postgrado.use(cors());
 
 
 
-    users.get('/users', (req,res) => {
-        User.getUsers((err,data) => {
+postgrado.get('/postgrado', (req,res) => {
+        Postgrado.getUsers((err,data) => {
             res.json(data);
         });
     });
 
 
-    users.post('/users', (req, res) => {
+    postgrado.post('/postgrado', (req, res) => {
         const userData= {
             
-            username: req.body.username,
-            password: req.body.password,
-            role: req.body.role
+            TituloPostgrado: req.body.TituloPostgrado,
+            UniversidadPostgrado: req.body.UniversidadPostgrado,
+            NivelPostgrado: req.body.NivelPostgrado
             // created_at: null//
             
         };
 
-        User.postUsers( userData, (err, data) =>{
+        Postgrado.postDatos( userData, (err, data) =>{
             if(data&& data.insertId) {
                 console.log(data)
                 res.json({
@@ -42,17 +42,18 @@ users.use(cors());
 
     });
 
-    users.put('/users/:id', (req, res) =>{
+    postgrado.put('/postgrado/:id', (req, res) =>{
        
         const userData= {
-            id: req.params.id,
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            created_at: null
+            
+            TituloPostgrado: req.body.TituloPostgrado,
+            UniversidadPostgrado: req.body.UniversidadPostgrado,
+            NivelPostgrado: req.body.NivelPostgrado
+            // created_at: null//
             
         };
-        User.updateUser(userData, (err, data) =>{
+
+        Postgrado.updateDatos(userData, (err, data) =>{
             if(data && data.msg){
                 res.json(data)
             } else{
@@ -64,8 +65,8 @@ users.use(cors());
         })
     })
 
-    users.delete('/users/:id', (req, res) =>{
-        User.deleteUser( req.params.id, (err, data) =>{
+    postgrado.delete('/postgrado/:id', (req, res) =>{
+        Postgrado.deleteUser( req.params.id, (err, data) =>{
             if(data && data.msg === 'deleted' || data.msg ==='not exists'){
                 res.json({
                     success: true,
@@ -78,4 +79,4 @@ users.use(cors());
             }
         })
     })
-module.exports= users;
+module.exports= postgrado;
