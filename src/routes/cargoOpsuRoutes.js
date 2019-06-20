@@ -1,14 +1,16 @@
 const express = require("express");
 const cargoOpsu = express.Router();
 const CargoOpsu=require('../models/cargoOpsu');
+const {verificaToken}= require('../middlewares/autenticacion')
 const cors = require('cors')
 cargoOpsu.use(cors());
 
 
 
     cargoOpsu.get('/cargoopsu', (req,res) => {
-        CargoOpsu.getUsers((err,data) => {
+        CargoOpsu.getDatos((err,data) => {
             res.json(data);
+            console.log(data)
         });
     });
 

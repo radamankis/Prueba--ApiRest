@@ -7,7 +7,7 @@ cargo.use(cors());
 
 
 cargo.get('/cargo', (req,res) => {
-        Cargo.getUsers((err,data) => {
+        Cargo.getDatos((err,data) => {
             res.json(data);
         });
     });
@@ -16,7 +16,7 @@ cargo.get('/cargo', (req,res) => {
     cargo.post('/cargo', (req, res) => {
         const datosData= {
             
-            idDatoPersonal: req.params.id,
+            idDatoPersonal: req.body.idDatoPersonal,
             Nucleo: req.body.Nucleo,
             CodigoNucleo: req.body.CodigoNucleo,
             Localizacion: req.body.Localizacion,
@@ -40,10 +40,11 @@ cargo.get('/cargo', (req,res) => {
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+              const a=  res.status(500).json({
                     success:false,
                     msg: 'Error'
                 })
+                console.log(a)
             }
         })
 

@@ -30,7 +30,7 @@ userModel.postUsers= (userData,callback) => {
             (err, result) => {
                 
                 if(err){
-                   
+                    
                     throw err;
                 } else {
                     callback(null,{
@@ -56,6 +56,36 @@ userModel.updateUser= (userData, callback) => {
         })
     }
 }
+
+userModel.getUser=(data, callback)=>{
+    if(connection){
+         
+        connection.query('SELECT * FROM usuario WHERE username= ?',[data],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
+userModel.getUserRol=(data, callback)=>{
+    if(connection){
+         
+        connection.query('SELECT * FROM usuario WHERE role= ?',[data],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
 
 userModel.deleteUser= ( id, callback) => {
     if(connection){

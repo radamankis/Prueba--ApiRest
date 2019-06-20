@@ -23,9 +23,24 @@ datosPersonalModel.getDatos= (callback) =>{
         )
     }
 };
+
 datosPersonalModel.getDato= (id,callback) =>{
     if(connection) {
         connection.query('SELECT * FROM datospersonal WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
+datosPersonalModel.getcedula= (cedula,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM datospersonal WHERE Cedula= ? ',[cedula],
         (err, rows) =>{
             if(err){
                 throw err;

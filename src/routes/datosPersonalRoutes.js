@@ -13,6 +13,38 @@ datos.use(cors());
 
     datos.get('/datospersonal/:id', (req,res) => {
         datosPersonal.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.status(500).json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
+    datos.get('/datospersonal/buscar/:Cedula', (req,res) => {
+        console.log(req.params.Cedula)
+        datosPersonal.getcedula( req.params.Cedula, (err, data) => {
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.status(500).json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+    datos.get('/perfil/:Cedula', (req,res) => {
+        console.log(req.params.Cedula)
+        datosPersonal.getcedula( req.params.Cedula, (err, data) => {
             if(data ){
                 res.json({
                     success: true,

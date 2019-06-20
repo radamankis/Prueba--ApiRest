@@ -13,10 +13,10 @@ remuneracion.get('/remuneracion', (req,res) => {
     });
 
 
-    remuneracion.post('/remuneracion/:id', (req, res) => {
+    remuneracion.post('/remuneracion', (req, res) => {
         const datosData= {
             
-            idDatoPersonal: req.params.id,
+            idDatoPersonal: req.body.idDatoPersonal,
             SueldoTabla: req.body.SueldoTabla,
             BonoJefatura: req.body.BonoJefatura,
             PrimaFamiliar: req.body.PrimaFamiliar,

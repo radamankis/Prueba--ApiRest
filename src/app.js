@@ -25,6 +25,7 @@ var postgrado= require('./routes/postgradoRoutes');
 var rumuneracion= require('./routes/remuneracionRoutes');
 var tipoCargo= require('./routes/tipoCargoRoutes');
 var tipoPersonal= require('./routes/tipoPersonalRoutes');
+
 //Routes
 app.use('/', Users);
 app.use('/', DatosPersonal);
@@ -36,6 +37,7 @@ app.use('/', postgrado);
 app.use('/', rumuneracion);
 app.use('/', tipoCargo);
 app.use('/', tipoPersonal);
+
 
 app.listen(app.get('port'), ()=>{
     console.log('Server on port 4000');
