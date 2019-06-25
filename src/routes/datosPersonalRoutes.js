@@ -30,13 +30,13 @@ datos.use(cors());
     datos.get('/datospersonal/buscar/:Cedula', (req,res) => {
         console.log(req.params.Cedula)
         datosPersonal.getcedula( req.params.Cedula, (err, data) => {
-            if(data ){
+            if(data.length > 0 ){
                 res.json({
                     success: true,
                     data
                 })
             } else{
-                res.status(500).json({
+                res.json({
                     msg: 'Error'
                 })
     }

@@ -30,7 +30,7 @@ userModel.postUsers= (userData,callback) => {
             (err, result) => {
                 
                 if(err){
-                    
+                   
                     throw err;
                 } else {
                     callback(null,{
@@ -57,15 +57,16 @@ userModel.updateUser= (userData, callback) => {
     }
 }
 
-userModel.getUser=(data, callback)=>{
+ userModel.getUser=(data, callback)=>{
     if(connection){
          
         connection.query('SELECT * FROM usuario WHERE username= ?',[data],
         (err, rows) =>{
             if(err){
-                throw err;
+                
             } else{
-                callback(null, rows);
+                
+                callback(err, rows);
             }
         }
         )

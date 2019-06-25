@@ -13,8 +13,31 @@ users.use(cors());
 
         
         User.getUsers((err,data) => {
+            
             res.json(data);
         });
+    });
+
+    users.get('/user/:username', (req,res) => {
+        const Username= req.params.username;
+        
+        User.getUser( Username , (err, data) => {
+            if(data ){
+                res.json({
+                    success: true,
+                    data:{
+                        idUsuario: data[0].idUsuario,
+                        username: data[0].username,
+                        role: data[0].role
+
+                    }
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
     });
 
     users.get('/users/buscar/:role', (req,res) => {
@@ -33,9 +56,10 @@ users.use(cors());
     })
     })
 
-    users.get('/users/datos/:username', (req,res) => {
-        console.log(req.params.username)
-        User.getUser( req.params.role, (err, data) => {
+    users.get('/users/login/', (req,res) => {
+        const Username= req.body.username;
+        
+        User.getUser( Username , (err, data) => {
             if(data ){
                 res.json({
                     success: true,
@@ -48,22 +72,25 @@ users.use(cors());
     }
     })
     })
-    users.post('/login',(req,res)=>{
 
-        let body= req.body;
-        let username= body.username;
-        let password= body.password;
+  users.post('/login',(req,res)=>{
+
+        
+       const Username= req.body.username;
+        const Password= req.body.password;
         
         
-        User.getUser(username,(err,data)=>{
-        if(err){
-            return res.status(500).json({
+       User.getUser (Username,(err,data)=>{
+           
+        if(data.length === 0){
+            return res.json({
                 ok:false,
-                err
+                err: 
+                { mensage:'No existe el usuario'}
             })
         }
-        if(!data){
-            return res.status(400).json({
+        if(data[0].password === undefined){
+            return res.json({
                 ok:false,
                 err:{
                     mensage: "El usuario o contraseña incorrecto "
@@ -71,8 +98,8 @@ users.use(cors());
             })
         }
         
-        if(! bcrypt.compareSync( password, data[0].password)){
-            return res.status(400).json({
+        if(! bcrypt.compareSync( Password, data[0].password)){
+            return res.json({
                 ok:false,
                 err:{
                     mensage: "El usuario o contraseña incorrecto "
@@ -81,19 +108,28 @@ users.use(cors());
         }
     
         let token= jsw.sign({
-            data:data
+            idUsuario:data[0].idUsuario,
+            username: data[0].username,
+            role: data[0].role
         }, 'secret', {expiresIn: 60* 60})
         
-         res.json({
-            ok:true,
-            data:data,
-            token
+         
+         res.token= token;
+         
+        res.json({
+            ok: true,
+            data:{ username: data[0].username,
+                    role: data[0].role},            
+            token,
+            errors: []
+         })
+         
         })
         
        
     })
     
-    })
+   
 
 
     users.post('/users', (req, res) => {
@@ -105,25 +141,35 @@ users.use(cors());
             // created_at: null//
             
         };
-
-        User.postUsers( userData, (err, data) =>{
-            if(data&& data.insertId) {
-                console.log(data)
-                res.json({
-                    success: true,
-                    msg: 'Usuario Creado',
-                    data: data
+        User.getUser(req.body.username,(err,data)=>{
+            if(! data.length>0){
+                User.postUsers( userData, (err, data) =>{
+            
+                    if(data&& data.insertId) {
+                        console.log(data)
+                        res.json({
+                            success: true,
+                            msg: 'Usuario Creado',
+                            data: data
+                        })
+                    } else{
+                        
+                        
+                        res.status(500).json({
+                            success:false,
+                            msg: 'Error'
+                        })
+                    }
                 })
-            } else{
-                console.log(err)
-                res.status(500).json({
-                    success:false,
-                    msg: 'Error'
-                })
+        
             }
+            res.json({
+                success: false,
+                msg: 'El username ya existe'
+            })
+            });
         })
-
-    });
+        
 
     users.put('/users/:id', (req, res) =>{
        
