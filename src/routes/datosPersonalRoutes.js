@@ -51,7 +51,7 @@ datos.use(cors());
                     data
                 })
             } else{
-                res.status(500).json({
+                res.json({
                     msg: 'Error'
                 })
     }
@@ -71,25 +71,39 @@ datos.use(cors());
             idDetalles: null
             
         };
-        
-        datosPersonal.postDatos( datosData, (err, data) =>{
-            if(data&& data.insertId) {
-                console.log(data)
-                res.json({
-                    success: true,
-                    msg: 'Datos Creado',
-                    data: data
-                })
-            } else{
-                console.log(err)
-                res.status(500).json({
-                    success:false,
-                    msg: 'Error'
-                })
-            }
-        })
 
-    });
+        datosPersonal.getcedula(datosData.Cedula,(err,data)=>{
+            if(!data.length>0){
+
+                datosPersonal.postDatos( datosData, (err, data) =>{
+                    if(data&& data.insertId) {
+                        console.log(data)
+                        res.json({
+                            success: true,
+                            msg: 'Datos Creado',
+                            data: data
+                        })
+                    } else{
+                        console.log(err)
+                        res.json({
+                            success:false,
+                            msg: 'Error'
+                        })
+                    }
+                })
+        
+            } else{
+                res.json({
+                success: false,
+                msg: 'Esta Cedula ya existe'
+            })}
+            
+            });
+        });
+        
+       
+
+    
 
     datos.put('/datospersonal/:id', (req, res) =>{
        
@@ -126,7 +140,7 @@ datos.use(cors());
                     data
                 })
             } else{
-                res.status(500).json({
+                res.json({
                     msg: 'Error'
                 })
             }

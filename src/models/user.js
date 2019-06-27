@@ -43,6 +43,8 @@ userModel.postUsers= (userData,callback) => {
 };
 
 userModel.updateUser= (userData, callback) => {
+
+    
     if(connection){
 
         connection.query('UPDATE usuario SET username = ?, email = ?, password = ?, role=?  WHERE id = ?',[userData.username, userData.email, userData.password, userData.role,  userData.id], (err, result) => {
@@ -66,7 +68,7 @@ userModel.updateUser= (userData, callback) => {
                 
             } else{
                 
-                callback(err, rows);
+                callback(null, rows);
             }
         }
         )

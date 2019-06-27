@@ -24,6 +24,21 @@ cargoModel.getDatos= (callback) =>{
     }
 };
 
+cargoModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM cargo WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                console.log(rows)
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 cargoModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO cargo SET ?',datosData,

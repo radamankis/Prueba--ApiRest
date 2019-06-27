@@ -12,7 +12,21 @@ let remuneracionesModel={};
 
 remuneracionesModel.getDatos= (callback) =>{
     if(connection) {
-        connection.query('SELECT * FROM remuneraciones ORDER BY id',
+        connection.query('SELECT * FROM remuneraciones ',
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
+remuneracionesModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM remuneraciones WHERE idDatoPersonal= ? ',[id],
         (err, rows) =>{
             if(err){
                 throw err;

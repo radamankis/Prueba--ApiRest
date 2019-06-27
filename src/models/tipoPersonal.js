@@ -24,6 +24,21 @@ tipoPersonalModel.getDatos= (callback) =>{
     }
 };
 
+tipoPersonalModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM tipopersonal WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                console.log(rows)
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 tipoPersonalModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO tipopersonal SET ?',datosData,

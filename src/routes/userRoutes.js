@@ -118,7 +118,8 @@ users.use(cors());
          
         res.json({
             ok: true,
-            data:{ username: data[0].username,
+            data:{ idUsuario: data[0].idUsuario,
+                username: data[0].username,
                     role: data[0].role},            
             token,
             errors: []
@@ -142,7 +143,7 @@ users.use(cors());
             
         };
         User.getUser(req.body.username,(err,data)=>{
-            if(! data.length>0){
+            if(!data.length>0){
                 User.postUsers( userData, (err, data) =>{
             
                     if(data&& data.insertId) {
@@ -155,18 +156,18 @@ users.use(cors());
                     } else{
                         
                         
-                        res.status(500).json({
+                        res.json({
                             success:false,
                             msg: 'Error'
                         })
                     }
                 })
         
-            }
-            res.json({
+            } else{res.json({
                 success: false,
                 msg: 'El username ya existe'
-            })
+            })}
+            
             });
         })
         

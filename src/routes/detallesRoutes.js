@@ -12,10 +12,26 @@ detalles.use(cors());
         });
     });
 
+    detalles.get('/detalles/:id', (req,res) => {
+        Detalle.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
 
     detalles.post('/detalles', (req, res) => {
         const userData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             Discapacidad: req.body.Discapacidad,
             FechaJubilacion: req.body.FechaJubilacion,
             FechaVigencia: req.body.FechaVigencia,
@@ -33,12 +49,12 @@ detalles.use(cors());
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Detalles agregados',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })
@@ -51,7 +67,7 @@ detalles.use(cors());
        
         const userData= {
             
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             idUsuario: req.body.idUsuario,
             idFormacionAcademica: req.body.idFormacionAcademica,
            

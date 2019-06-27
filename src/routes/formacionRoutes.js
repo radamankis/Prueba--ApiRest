@@ -12,10 +12,25 @@ formacion.use(cors());
         });
     });
 
+    formacion.get('/formacion/:id', (req,res) => {
+        Formacion.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
 
     formacion.post('/formacion', (req, res) => {
         const userData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             GradoInstitucion: req.body.GradoInstitucion,
             TituloPregrado: req.body.TituloPregrado,
             UniversidadPre: req.body.UniversidadPre
@@ -28,12 +43,12 @@ formacion.use(cors());
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Formacion Agregada',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })
@@ -45,7 +60,7 @@ formacion.use(cors());
     formacion.put('/formacion/:id', (req, res) =>{
        
         const userData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             GradoInstitucion: req.body.GradoInstitucion,
             TituloPregrado: req.body.TituloPregrado,
             UniversidadPre: req.body.UniversidadPre

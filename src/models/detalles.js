@@ -24,6 +24,20 @@ detalleModel.getDatos= (callback) =>{
     }
 };
 
+detalleModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM detalles WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 detalleModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO detalles SET ?',datosData,

@@ -24,6 +24,20 @@ postgradoModel.getDatos= (callback) =>{
     }
 };
 
+postgradoModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM postgrado WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 postgradoModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO postgrado SET ?',datosData,

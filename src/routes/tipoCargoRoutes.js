@@ -12,10 +12,27 @@ tipoCargo.get('/tipocargo', (req,res) => {
         });
     });
 
+    tipoCargo.get('/tipocargo/:id', (req,res) => {
+        TipoCargo.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
+
 
     tipoCargo.post('/tipocargo', (req, res) => {
         const datosData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             Generico: req.body.Generico,
             Especifico: req.body.Especifico,
             DedicacionLaboral: req.body.DedicacionLaboral,
@@ -29,12 +46,12 @@ tipoCargo.get('/tipocargo', (req,res) => {
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Tipo de cargo creado',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })
@@ -46,7 +63,7 @@ tipoCargo.get('/tipocargo', (req,res) => {
     tipoCargo.put('/tipocargo/:id', (req, res) =>{
        
         const datosData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             Generico: req.body.Generico,
             Especifico: req.body.Especifico,
             DedicacionLaboral: req.body.DedicacionLaboral,

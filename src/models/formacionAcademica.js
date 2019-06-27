@@ -24,6 +24,20 @@ formacionModel.getDatos= (callback) =>{
     }
 };
 
+formacionModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM formacionacademica WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 formacionModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO formacionacademica SET ?',datosData,

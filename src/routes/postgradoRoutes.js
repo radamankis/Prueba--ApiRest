@@ -12,10 +12,26 @@ postgrado.get('/postgrado', (req,res) => {
         });
     });
 
+    postgrado.get('/postgrado/:id', (req,res) => {
+        Postgrado.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
 
     postgrado.post('/postgrado', (req, res) => {
         const userData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             TituloPostgrado: req.body.TituloPostgrado,
             UniversidadPostgrado: req.body.UniversidadPostgrado,
             NivelPostgrado: req.body.NivelPostgrado
@@ -28,12 +44,12 @@ postgrado.get('/postgrado', (req,res) => {
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Postgrado Agregado',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })
@@ -45,7 +61,7 @@ postgrado.get('/postgrado', (req,res) => {
     postgrado.put('/postgrado/:id', (req, res) =>{
        
         const userData= {
-            
+            idDatoPersonal: req.body.idDatoPersonal,
             TituloPostgrado: req.body.TituloPostgrado,
             UniversidadPostgrado: req.body.UniversidadPostgrado,
             NivelPostgrado: req.body.NivelPostgrado

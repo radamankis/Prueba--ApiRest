@@ -12,12 +12,28 @@ tipoPersonal.get('/tipopersonal', (req,res) => {
         });
     });
 
+    tipoPersonal.get('/tipopersonal/:id', (req,res) => {
+        TipoPersonal.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
 
     tipoPersonal.post('/tipopersonal', (req, res) => {
         const datosData= {
             
-            idDatoPersonal: req.params.idDatoPersonal,
-            idTipoCargo: req.body.idTipoCargo,
+            idDatoPersonal: req.body.idDatoPersonal,
+            
             ComisionServicioDesde: req.body.ComisionServicioDesde,
             ComisionServicioHasta: req.body.ComisionServicioHasta,
             PermisoNRDesde: req.body.PermisoNRDesde,
@@ -36,12 +52,12 @@ tipoPersonal.get('/tipopersonal', (req,res) => {
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Tipo de Personal Creado',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })
@@ -55,7 +71,7 @@ tipoPersonal.get('/tipopersonal', (req,res) => {
         const datosData= {
             
             idDatoPersonal: req.params.idDatoPersonal,
-            idTipoCargo: req.body.idTipoCargo,
+            
             ComisionServicioDesde: req.body.ComisionServicioDesde,
             ComisionServicioHasta: req.body.ComisionServicioHasta,
             PermisoNRDesde: req.body.PermisoNRDesde,

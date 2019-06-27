@@ -24,6 +24,20 @@ tipoCargoModel.getDatos= (callback) =>{
     }
 };
 
+tipoCargoModel.getDato= (id,callback) =>{
+    if(connection) {
+        connection.query('SELECT * FROM tipocargo WHERE idDatoPersonal= ? ',[id],
+        (err, rows) =>{
+            if(err){
+                throw err;
+            } else{
+                callback(null, rows);
+            }
+        }
+        )
+    }
+};
+
 tipoCargoModel.postDatos= (datosData,callback) => {
     if(connection){
         connection.query('INSERT INTO tipocargo SET ?',datosData,

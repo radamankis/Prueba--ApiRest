@@ -12,7 +12,21 @@ remuneracion.get('/remuneracion', (req,res) => {
         });
     });
 
-
+    remuneracion.get('/remuneracion/:id', (req,res) => {
+        Remuneracion.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
     remuneracion.post('/remuneracion', (req, res) => {
         const datosData= {
             
@@ -36,12 +50,12 @@ remuneracion.get('/remuneracion', (req,res) => {
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Remuneracion Agregada',
                     data: data
                 })
             } else{
                 console.log(err)
-                res.status(500).json({
+                res.json({
                     success:false,
                     msg: 'Error'
                 })

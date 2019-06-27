@@ -12,6 +12,23 @@ cargo.get('/cargo', (req,res) => {
         });
     });
 
+    cargo.get('/cargo/:id', (req,res) => {
+        Cargo.getDato( req.params.id, (err, data) => {
+            console.log(req.params.id)
+            if(data ){
+                res.json({
+                    success: true,
+                    data
+                })
+            } else{
+                res.json({
+                    msg: 'Error'
+                })
+    }
+    })
+    })
+
+
 
     cargo.post('/cargo', (req, res) => {
         const datosData= {
@@ -35,12 +52,12 @@ cargo.get('/cargo', (req,res) => {
                 console.log(data)
                 res.json({
                     success: true,
-                    msg: 'Usuario Creado',
+                    msg: 'Cargo Creado',
                     data: data
                 })
             } else{
                 console.log(err)
-              const a=  res.status(500).json({
+              const a=  res.json({
                     success:false,
                     msg: 'Error'
                 })
